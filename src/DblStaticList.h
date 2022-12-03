@@ -10,27 +10,64 @@ private:
     int length;
     int maxLen;
     int avail;
-    Node<ElemType> &pool[];
+    Node<ElemType>* sll;
 public:
+    int malloc_sll();
+    Status free_sll(const int i);
+    Status InsertElem(const ElemType &e);
     int getLen();
+    bool isEmpty();
+    void Clear();
     void Traverse(void (*Visit)(const ElemType &e))const;
-    Status malloc_list(int &tar);
-    Status InsElem(const ElemType &e);
-    dblStaticList(ElemType *_pool,int _TotalSize);
+    dblStaticList(int _TotalSize);
     ~dblStaticList();
 };
 
 template <class ElemType>
-dblStaticList<ElemType>::dblStaticList(ElemType &_pool[],int _TotalSize):pool(_pool),maxLen(_TotalSize-1)
+int dblStaticList<ElemType>::malloc_sll()
 {
-   this->avail=1;
-   this->head=0;
-   this->length=0;
+    if(sll==nullptr||avail==head){
+        return -1;
+    }else{
+        avail=sll[avail].next;
+        return avail;
+    }
+}
+
+template <class ElemType>
+Status dblStaticList<ElemType>::free_sll(const int i)
+{
+    if(sll[i].isEmpty)
+    {
+        return Status::RANGE_ERROR;
+    }
+    sll[i].next=avail;
+    avail=i;
+    sll[avail].isEmpty=true;
+    return SUCCESS;
+}
+
+template <class ElemType>
+dblStaticList<ElemType>::dblStaticList(int _TotalSize):maxLen(_TotalSize)
+{
+    this->avail=1;
+    this->head=0;
+    this->length=0;
+
+    if(sll!=nullptr){
+        sll=new Node<ElemType>[_TotalSize+1];
+        for(int it=0;it<_TotalSize;it++)
+        {
+            sll[it].next=it+1;
+        }
+        sll[_TotalSize].next=head;
+    } 
 }
 
 template <class ElemType>
 dblStaticList<ElemType>::~dblStaticList()
 {
+    delete[] sll;
 }
 
 template <class ElemType>
@@ -42,18 +79,48 @@ int dblStaticList<ElemType>::getLen()
 template <class ElemType>
 void dblStaticList<ElemType>::Traverse(void (*Visit)(const ElemType &e))const
 {
-    for(int it=this->head;it!=head;it=pool[it].next)
+    for(int it=sll[this->head].next;it!=head;it=sll[it].next)
     {
-        Visit(pool[it].data);
+        (*Visit)(sll[it].data);
     }
 }
 
 template <class ElemType>
-Status dblStaticList<ElemType>::InsElem(const ElemType &e)
+void dblStaticList<ElemType>::Clear()
 {
-    int it=pool[this->head].prior;
-    pool[avail]=Node<ElemType>(e,it,pool[it].next);
-
-    return SUCCESS;
+    int p=sll[head].next;
+    Status sta=SUCCESS;
+    while(sta==SUCCESS)
+    {
+        sta=free_sll(p);
+    }
 }
+
+template <class ElemType>
+bool dblStaticList<ElemType>::isEmpty()
+{
+    return sll[sll[head].next].isEmpty;
+}
+
+template <class ElemType>
+Status dblStaticList<ElemType>::InsertElem(const ElemType &e)
+{
+    int p;
+	for (p = sll[head].next; p != head; p = sll[p].next){
+		if(sll[p].data<e){
+			break;
+		}
+	}
+	int _pNode=malloc_sll();
+    sll[_pNode].data=e;
+    sll[_pNode].prior=sll[p].prior;
+    sll[_pNode].next=p;
+    
+	sll[sll[p].prior].next=_pNode;
+	sll[p].prior=_pNode;
+	length++;						
+	return SUCCESS;
+}
+
+
 

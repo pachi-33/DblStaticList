@@ -3,11 +3,11 @@
 template <class ElemType>
 class Node
 {
-protected:
+public:
     int prior;
     ElemType data;
     int next;
-public:
+    bool isEmpty;
     Node();
     Node(ElemType &e,
     int _prior,
@@ -15,7 +15,7 @@ public:
 };
 
 template<class ElemType>
-Node<ElemType>::Node()
+Node<ElemType>::Node():isEmpty(true)
 {
     this->next=-1;
     this->prior=-1;

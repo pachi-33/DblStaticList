@@ -67,7 +67,7 @@ private:
 
 public:
 //  方法声明
-	Error(const char *mes = "一般性异常!");	// 构造函数 
+	Error(const char *mes = "normal!");	// 构造函数 
 	~Error(void) {};					// 析构函数	
 	void Show() const;					// 显示异常信息
 };
