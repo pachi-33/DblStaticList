@@ -26,11 +26,13 @@ public:
 template <class ElemType>
 int dblStaticList<ElemType>::malloc_sll()
 {
-    if(sll==nullptr||avail==head){
+    if(sll==nullptr||avail==-1){
         return -1;
     }else{
+        int tmp=avail;
+        sll[avail].isEmpty=false;
         avail=sll[avail].next;
-        return avail;
+        return tmp;
     }
 }
 
@@ -52,6 +54,8 @@ dblStaticList<ElemType>::dblStaticList(int _TotalSize):maxLen(_TotalSize)
 {
     this->avail=1;
     this->head=0;
+    sll[head].next=head;
+    sll[head].prior=head;
     this->length=0;
 
     if(sll!=nullptr){
@@ -60,7 +64,7 @@ dblStaticList<ElemType>::dblStaticList(int _TotalSize):maxLen(_TotalSize)
         {
             sll[it].next=it+1;
         }
-        sll[_TotalSize].next=head;
+        sll[_TotalSize].next=-1;
     } 
 }
 
@@ -94,6 +98,11 @@ void dblStaticList<ElemType>::Clear()
     {
         sta=free_sll(p);
     }
+    this->avail=1;
+    this->head=0;
+    sll[head].next=head;
+    sll[head].prior=head;
+    this->length=0;
 }
 
 template <class ElemType>
@@ -107,7 +116,7 @@ Status dblStaticList<ElemType>::InsertElem(const ElemType &e)
 {
     int p;
 	for (p = sll[head].next; p != head; p = sll[p].next){
-		if(sll[p].data<e){
+		if(sll[p].data>e){
 			break;
 		}
 	}
