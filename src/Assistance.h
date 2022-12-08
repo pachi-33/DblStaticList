@@ -19,8 +19,10 @@
 using namespace std;				// 标准库包含在命名空间std中
 
 // 自定义类型
-enum Status {SUCCESS, FAIL, UNDER_FLOW, OVER_FLOW,RANGE_ERROR, DUPLICATE_ERROR,
-	NOT_PRESENT, ENTRY_INSERTED, ENTRY_FOUND, VISITED, UNVISITED};
+enum Status {
+	SUCCESS, FAIL, UNDER_FLOW, OVER_FLOW, RANGE_ERROR, DUPLICATE_ERROR,
+	NOT_PRESENT, ENTRY_INSERTED, ENTRY_FOUND, VISITED, UNVISITED
+};
 
 // 宏定义
 #define DEFAULT_SIZE 1000			// 缺省元素个数
@@ -29,21 +31,21 @@ enum Status {SUCCESS, FAIL, UNDER_FLOW, OVER_FLOW,RANGE_ERROR, DUPLICATE_ERROR,
 
 // 辅助函数声明
 
-char GetChar(istream &inStream = cin); // 从输入流inStream中跳过空格及制表符获取一字符
+char GetChar(istream& inStream = cin); // 从输入流inStream中跳过空格及制表符获取一字符
 
 template <class ElemType >
-void Swap(ElemType &e1, ElemType &e2);	// 交换e1, e2之值
+void Swap(ElemType& e1, ElemType& e2);	// 交换e1, e2之值
 
 template<class ElemType>
 void Display(ElemType elem[], int n);	// 显示数组elem的各数据元素值
 
 template <class ElemType>
-void Write(const ElemType &e);			// 显示数据元素
+void Write(const ElemType& e);			// 显示数据元素
 
 // 辅助类
 class Error;			// 通用异常类
 
-char GetChar(istream &inStream)
+char GetChar(istream& inStream)
 // 操作结果：从输入流inStream中跳过空格及制表符获取一字符
 {
 	char ch;								// 临时变量
@@ -51,8 +53,8 @@ char GetChar(istream &inStream)
 											// 字符,流的当前位置不变)
 		&& ((ch = (inStream).get()) == ' '	// 空格(get()函数从输入流中接受1字符,流
 											// 的当前位置向后移1个位置)
-		|| ch == '\t'));					// 制表符
-	
+			|| ch == '\t'));					// 制表符
+
 	return ch;								// 返回字符
 }
 
@@ -62,21 +64,21 @@ char GetChar(istream &inStream)
 class Error
 {
 private:
-// 数据成员
+	// 数据成员
 	char message[MAX_ERROR_MESSAGE_LEN];// 异常信息
 
 public:
-//  方法声明
-	Error(const char *mes = "normal!");	// 构造函数 
+	//  方法声明
+	Error(const char* mes = "normal!");	// 构造函数 
 	~Error(void) {};					// 析构函数	
 	void Show() const;					// 显示异常信息
 };
 
 // 通用异常类的实现部分
-Error::Error(const char *mes)
+Error::Error(const char* mes)
 // 操作结果：由mes构构通用异常对象
 {
-	strcpy(message, mes);				// 复制异常信息
+	strcpy_s(message, mes);				// 复制异常信息
 }
 
 void Error::Show()const
@@ -87,7 +89,7 @@ void Error::Show()const
 
 
 template <class ElemType >
-void Swap(ElemType &e1, ElemType &e2)
+void Swap(ElemType& e1, ElemType& e2)
 // 操作结果: 交换e1, e2之值
 {
 	ElemType temp;		// 临时变量
@@ -103,14 +105,15 @@ void Display(ElemType elem[], int n)
 	{	// 显示数组elem
 		cout << elem[i] << "  ";
 	}
-	cout << endl; 
+	cout << endl;
 }
 
 template <class ElemType>
-void Write(const ElemType &e)
+void Write(const ElemType& e)
 // 操作结果: 显示数据元素
 {
-    cout << e << "  ";
+	cout << e << "  ";
 }
 
 #endif
+

@@ -6,82 +6,86 @@ using namespace std;
 int main(void)
 {
 	char c = '1';
-    dblStaticList<double> la(10);
-    double e;
+	dblStaticList<double> la(10);
+	dblStaticList<double> lb(10);
+	double e;
 	int i;
 
-    while (c != '0')	{
-        cout << endl << "1. ç”Ÿæˆçº¿æ€§è¡¨.";
-        cout << endl << "2. æ˜¾ç¤ºçº¿æ€§è¡¨.";
-        // cout << endl << "3. å–æŒ‡å®šå…ƒç´ å€¼.";
-        // cout << endl << "4. è®¾ç½®å…ƒç´ å€¼.";
-        // cout << endl << "5. åˆ é™¤å…ƒç´ .";
-        // cout << endl << "6. æ’å…¥å…ƒç´ .";
-        // cout << endl << "7. å…ƒç´ å®šä½.";
-		cout << endl << "0. é€€å‡º";
-		cout << endl << "é€‰æ‹©åŠŸèƒ½(0~8):";
+	while (c != '0') {
+		cout << endl << "1. Éú³ÉÏßÐÔ±í.";
+		cout << endl << "2. ÏÔÊ¾ÏßÐÔ±í.";
+		cout << endl << "3. È¡Ö¸¶¨ÔªËØÖµ.";
+		cout << endl << "4. ÉèÖÃÔªËØÖµ.";
+		cout << endl << "5. É¾³ýÔªËØ.";
+		// cout << endl << "6. ²åÈëÔªËØ.";
+		cout << endl << "7. ÔªËØ¶¨Î».";
+		cout << endl << "0.ÍË³ö.";
+		cout << endl << "Ñ¡Ôñ¹¦ÄÜ£º";
 		cin >> c;
-		switch (c) 		{
-			case '1':
-                la.Clear();
-				cout << endl << "è¾“å…¥e(e = 0æ—¶é€€å‡º):";
+		switch (c) {
+		case '1':
+			la.Clear();
+			cout << endl << "ÊäÈëe(e = 0Ê±ÍË³ö):";
+			cin >> e;
+			while (e != 0) {
+				la.InsertElem(e);
 				cin >> e;
-				while (e != 0)				{
-					la.InsertElem(e);
-					cin >> e;
-				}
-				break;
-			case '2':
-			    la.Traverse(Write<double>);
-				break;
-			// case '3':
-			//     cout << endl << "è¾“å…¥å…ƒç´ ä½ç½®:";
-			//     cin >> i;
-			//     if (la.GetElem(i, e) == NOT_PRESENT) 
-			// 		cout << "å…ƒç´ ä¸å­˜å‚¨." << endl;
-			// 	else
-			// 		cout << "å…ƒç´ :" << e << endl;
-			//     break;
-			// case '4':
-			//     cout << endl << "è¾“å…¥ä½ç½®:";
-			//     cin >> i;
-			//     cout << endl << "è¾“å…¥å…ƒç´ å€¼:";
-			//     cin >> e;
-			// 	if (la.SetElem(i, e) == RANGE_ERROR)
-			// 		cout << "ä½ç½®èŒƒå›´é”™." << endl;
-			// 	else
-			// 		cout << "è®¾ç½®æˆåŠŸ." << endl;
-			//     break;
-			// case '5':
-			//     cout << endl << "è¾“å…¥ä½ç½®:";
-			//     cin >> i;
-			//     if (la.DeleteElem(i, e) == RANGE_ERROR) 
-			// 		cout << "ä½ç½®èŒƒå›´é”™." << endl;
-			// 	else
-			// 		cout << "è¢«åˆ é™¤å…ƒç´ å€¼:" << e << endl;
-			//     break;
+			}
+			break;
+		case '2':
+			lb = la;
+			la.Traverse(Write<double>);
+			cout << endl;
+			lb.Traverse(Write<double>);
+			break;
+		case '3':
+			cout << endl << "ÊäÈëÔªËØÎ»ÖÃ:";
+			cin >> i;
+			if (la.GetElem(i, e) == NOT_PRESENT)
+				cout << "ÔªËØ²»´æ´¢." << endl;
+			else
+				cout << "ÔªËØ:" << e << endl;
+			break;
+		case '4':
+			cout << endl << "ÊäÈëÎ»ÖÃ:";
+			cin >> i;
+			cout << endl << "ÊäÈëÔªËØÖµ:";
+			cin >> e;
+			if (la.SetElem(i, e) == RANGE_ERROR)
+				cout << "Î»ÖÃ·¶Î§´í." << endl;
+			else
+				cout << "ÉèÖÃ³É¹¦." << endl;
+			break;
+		case '5':
+			cout << endl << "ÊäÈëÎ»ÖÃ:";
+			     cin >> i;
+			     if (la.DeleteElem(i, e) == RANGE_ERROR) 
+			 		cout << "Î»ÖÃ·¶Î§´í." << endl;
+			 	else
+			 		cout << "±»É¾³ýÔªËØÖµ:" << e << endl;
+			     break;
 			// case '6':
-			//     cout << endl << "è¾“å…¥ä½ç½®:";
+			//     cout << endl << "ÊäÈëÎ»ÖÃ:";
 			//     cin >> i;
-			//     cout << endl << "è¾“å…¥å…ƒç´ å€¼:";
+			//     cout << endl << "ÊäÈëÔªËØÖµ:";
 			//     cin >> e;
 			//     if (la.InsertElem(i, e) == RANGE_ERROR) 
-			// 		cout << "ä½ç½®èŒƒå›´é”™." << endl;
+			// 		cout << "Î»ÖÃ·¶Î§´í." << endl;
 			// 	else
-			// 		cout << "æˆåŠŸ:" << e << endl;
+			// 		cout << "³É¹¦:" << e << endl;
 			//     break;
-			// case '7':
-			//     cout << endl << "è¾“å…¥å…ƒç´ å€¼:";
-			//     cin >> e;
-			//     i = la.LocateElem(e);
-			//     if (i == 0) 
-			// 		cout << "æŒ‡å®šå…ƒç´ ä¸å­˜åœ¨." << endl;
-			// 	else
-			// 		cout << "æŒ‡å®šå…ƒç´ çš„åºå·ä¸ºï¼š" << i << endl;
-			//     break;	
-          }
+			case '7':
+				cout << endl << "ÊäÈëÔªËØÖµ:";
+				cin >> e;
+				i = la.LocateElem(e);
+				if (i == 0)
+					cout << "Ö¸¶¨ÔªËØ²»´æÔÚ." << endl;
+				else
+					cout << "Ö¸¶¨ÔªËØµÄÐòºÅÎª£º" << i << endl;
+				break;
+		}
 	}
 
-	system("PAUSE");			
-	return 0;		
+	system("PAUSE");
+	return 0;
 }
